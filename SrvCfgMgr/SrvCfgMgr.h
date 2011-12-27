@@ -34,6 +34,11 @@ class TSrvCfgMgr : public TCfgMgr
 public:
     friend ostream & operator<<(ostream &strum, TSrvCfgMgr &x);
 
+    enum Feature {
+        FEATURE_EXPRESSIONS = 0,
+        FEATURE_COUNT
+    };
+
     static void instanceCreate(const std::string cfgFile, const std::string xmlDumpFile);
     static TSrvCfgMgr &instance();
 
@@ -113,12 +118,17 @@ public:
 
     // Client List check
     void InClientClass(SPtr<TSrvMsg> msg);
+
+    void setLogFeature(Feature f);
+    bool getLogFeature(Feature f);
 private:
     TSrvCfgMgr(string cfgFile, string xmlFile);
     static TSrvCfgMgr * Instance;
     static int NextRelayID;
     string XmlFile;
     bool reconfigure;
+
+    bool Features_[FEATURE_COUNT];
 
     bool IsDone;
     bool validateConfig();

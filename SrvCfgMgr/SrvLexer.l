@@ -57,6 +57,9 @@ log-name            { return SrvParser::LOGNAME_;}
 log-level           { return SrvParser::LOGLEVEL_;}
 log-mode            { return SrvParser::LOGMODE_; }
 log-colors          { return SrvParser::LOGCOLORS_; }
+log-feature         { return SrvParser::LOGFEATURE_; }
+
+expr                { yylval.ival=0; return SrvParser::FEATURE_EXPR_; }
 
 work-dir            { return SrvParser::WORKDIR_;}
 

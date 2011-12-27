@@ -64,6 +64,10 @@ void TSrvCfgMgr::setDefaults()
     BulkLQTcpPort = BULKLQ_TCP_PORT;
     BulkLQMaxConns = BULKLQ_MAX_CONNS;
     BulkLQTimeout = BULKLQ_TIMEOUT;
+
+    for (int i=0; i<FEATURE_COUNT; i++) {
+        Features_[i] = false;
+    }
 }
 
 bool TSrvCfgMgr::parseConfigFile(string cfgFile) {
@@ -1074,4 +1078,12 @@ SPtr<TIPv6Addr> TSrvCfgMgr::getDDNSAddress(int iface)
         return 0;
     }
     return DNSAddr;
+}
+
+void TSrvCfgMgr::setLogFeature(Feature f) {
+    Features_[f] = true;
+}
+
+bool TSrvCfgMgr::getLogFeature(Feature f) {
+    return Features_[f];
 }

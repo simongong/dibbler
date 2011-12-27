@@ -97,7 +97,8 @@ virtual ~SrvParser();
 }
 
 %token IFACE_, RELAY_, IFACE_ID_, IFACE_ID_ORDER_, CLASS_, TACLASS_
-%token LOGNAME_, LOGLEVEL_, LOGMODE_, LOGCOLORS_, WORKDIR_
+%token LOGNAME_, LOGLEVEL_, LOGMODE_, LOGFEATURE_, LOGCOLORS_, WORKDIR_
+%token FEATURE_EXPR_
 %token OPTION_, DNS_SERVER_,DOMAIN_, NTP_SERVER_,TIME_ZONE_, SIP_SERVER_, SIP_DOMAIN_
 %token NIS_SERVER_, NIS_DOMAIN_, NISP_SERVER_, NISP_DOMAIN_, LIFETIME_
 %token FQDN_, ACCEPT_UNKNOWN_FQDN_, FQDN_DDNS_ADDRESS_, DDNS_PROTOCOL_, DDNS_TIMEOUT_
@@ -164,6 +165,7 @@ GlobalOption
 | LogLevelOption
 | LogNameOption
 | LogColors
+| LogFeatures
 | WorkDirOption
 | StatelessOption
 | CacheSizeOption
@@ -936,6 +938,12 @@ LogColors
 : LOGCOLORS_ Number
 {
     logger::setColors($2==1);
+}
+
+LogFeatures
+: LOGFEATURE_ FEATURE_EXPR_
+{
+    CfgMgr->setLogFeature(TSrvCfgMgr::FEATURE_EXPRESSIONS);
 }
 
 WorkDirOption
