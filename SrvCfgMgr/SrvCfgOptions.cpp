@@ -53,7 +53,25 @@ void TSrvCfgOptions::SetDefaults() {
 
     ExtraOpts.clear();
     ForcedOpts.clear();
+
+    Addr = 0;
+    Prefix_ = 0;
+    PrefixLen_ = 0;
 }
+
+void TSrvCfgOptions::setPrefix(SPtr<TIPv6Addr> prefix, int length) {
+    Prefix_ = prefix;
+    PrefixLen_ = length;
+}
+
+SPtr<TIPv6Addr> TSrvCfgOptions::getPrefix() {
+    return Prefix_;
+}
+
+int TSrvCfgOptions::getPrefixLen() {
+    return PrefixLen_;
+}
+
 
 // --------------------------------------------------------------------
 // --- options --------------------------------------------------------

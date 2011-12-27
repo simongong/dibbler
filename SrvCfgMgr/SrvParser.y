@@ -111,7 +111,7 @@ virtual ~SrvParser();
 %token PDCLASS_, PD_LENGTH_, PD_POOL_
 %token SCRIPT_
 %token VENDOR_SPEC_
-%token CLIENT_, DUID_KEYWORD_, REMOTE_ID_, ADDRESS_, GUESS_MODE_
+%token CLIENT_, DUID_KEYWORD_, REMOTE_ID_, ADDRESS_, PREFIX_, GUESS_MODE_
 %token INACTIVE_MODE_
 %token EXPERIMENTAL_, ADDR_PARAMS_, REMOTE_AUTOCONF_NEIGHBORS_
 %token AFTR_
@@ -308,6 +308,7 @@ ClientOption
 | ExtraOption
 | DsLiteAftrName
 | AddressReservation
+| PrefixReservation
 ;
 
 AddressReservation:
@@ -316,6 +317,14 @@ ADDRESS_ IPV6ADDR_
     addr = new TIPv6Addr($2);
     Log(Info) << "Exception: Address " << addr->getPlain() << " reserved." << LogEnd;
     ClientLst.getLast()->setAddr(addr);
+};
+
+PrefixReservation:
+PREFIX_ IPV6ADDR_ '/' INTNUMBER_
+{
+    SPtr<TIPv6Addr> addr(new TIPv6Addr($2));
+    Log(Debug) << "Exception: Prefix " << addr->getPlain() << "/" << $4 << " reserved." << LogEnd;
+    ClientLst.getLast()->setPrefix(addr, $4);
 };
 
 /* class { ... } */
