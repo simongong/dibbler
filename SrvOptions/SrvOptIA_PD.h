@@ -51,6 +51,7 @@ class TSrvOptIA_PD : public TOptIA_PD
     bool existingLease();
     int assignPrefix(SPtr<TIPv6Addr> hint, bool quiet);
     List(TIPv6Addr) getFreePrefixes(SPtr<TIPv6Addr> hint);
+    SPtr<TAddrPrefix> getExceptionPrefix();
 
     unsigned long Prefered;
     unsigned long Valid;

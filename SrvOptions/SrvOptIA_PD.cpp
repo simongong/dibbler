@@ -141,6 +141,36 @@ bool TSrvOptIA_PD::existingLease() {
 }
 
 /**
+ * tries to find prefix reserved for this particular client
+ *
+ * @return
+ */
+SPtr<TAddrPrefix> TSrvOptIA_PD::getExceptionPrefix()
+{
+    SPtr<TSrvCfgIface> ptrIface=SrvCfgMgr().getIfaceByID(Iface);
+    if (!ptrIface) {
+	return 0;
+    }
+
+    SPtr<TOptVendorData> remoteID;
+
+    TSrvMsg * par = dynamic_cast<TSrvMsg*>(Parent);
+    if (par) {
+	remoteID = par->getRemoteID();
+    }
+
+    SPtr<TSrvCfgOptions> ex = ptrIface->getClientException(ClntDuid, remoteID, false/* false = verbose */);
+
+    if (ex && ex->getPrefix()) {
+        SPtr<TAddrPrefix> prefix(new TAddrPrefix(ex->getPrefix(), ex->getPrefixLen()));
+	return prefix;
+    }
+
+    return 0;
+}
+
+
+/**
  * @brief gets one (or more) prefix for requested
  *
  * @param hint proposed prefix
