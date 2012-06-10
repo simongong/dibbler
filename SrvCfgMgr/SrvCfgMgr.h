@@ -64,8 +64,8 @@ public:
     SPtr<TSrvCfgAddrClass> getClassByAddr(int iface, SPtr<TIPv6Addr> addr);
     SPtr<TSrvCfgPD> getClassByPrefix(int iface, SPtr<TIPv6Addr> prefix);
     SPtr<TIPv6Addr> getRandomAddr(SPtr<TDUID> duid, SPtr<TIPv6Addr> clntAddr, int iface);
-    bool isClntSupported(SPtr<TDUID> duid, SPtr<TIPv6Addr> clntAddr, int iface);
-    bool isClntSupported(SPtr<TDUID> duid, SPtr<TIPv6Addr> clntAddr, int iface, SPtr<TSrvMsg> msg);
+    // bool isClntSupported(SPtr<TDUID> duid, SPtr<TIPv6Addr> clntAddr, int iface);
+    bool isClntSupported(/*SPtr<TDUID> duid, SPtr<TIPv6Addr> clntAddr, int iface,*/ SPtr<TSrvMsg> msg);
 
     // prefix-related
     bool incrPrefixCount(int iface, SPtr<TIPv6Addr> prefix);
@@ -80,6 +80,9 @@ public:
 
     void addTAAddr(int iface);
     void delTAAddr(int iface);
+
+    bool addrReserved(SPtr<TIPv6Addr> addr);
+    bool prefixReserved(SPtr<TIPv6Addr> prefix);
 
     bool isDone();
     virtual ~TSrvCfgMgr();
